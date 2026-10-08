@@ -26,30 +26,38 @@ public class ArrayLog<T> implements EnhancedLogInterface<T>
     // Returns the name of this StringLog.
     public String getName()
     {
-        return "";
+        return name;
     }
 
     // Returns the logical size of this StringLog.
     public int size()
     {
-        return -1;
+        return log.length();
     }
     
     // Returns true if this list contains no elements.
     public boolean isEmpty()
     {
+        if(log.length() == 0)
+        return true;
         return false;
     }
     
     // Returns true if this list is completely full.
     public boolean isFull()
     {
+        if(log.length() == size)
+        return true;
         return false;
     }
 
     // Appends the specified element to the end of this list.
     public void add(T element)
     {
+        if(log.isFull()){
+            log = new T[size*2];
+        }
+        
     }
   
     // Returns the element at the specified position in this list.
