@@ -66,10 +66,11 @@ public class ArrayLog<T> implements EnhancedLogInterface<T>
     // Returns the element at the specified position in this list.
     public T get(int index)
     {   
-        if(index < 0 || index >= size){
-            throw new IndexOutOfBoundsException("Out of bounds!");
+        try{
+            return log[index];
+        } catch (IndexOutOfBoundsException e){
+            throw new IndexOutOfBoundsException("Out of bounds! get(index)");
         }
-        return log[index];
     }
     
     // Returns the index of the first occurance of the specified element
@@ -105,19 +106,23 @@ public class ArrayLog<T> implements EnhancedLogInterface<T>
     // with the specified element.  Returns what was at that location
     public T set(int index, T element)
     {
-        if(index < 0 || index >= size){
-            throw new IndexOutOfBoundsException("Out of bounds!");
+        try{
+            if(index < 0 || index >= size){
+                throw new IndexOutOfBoundsException("Out of bounds! set(index, element)");
+            }
+            T oldElement = log[index];
+            log[index] = element;
+            return oldElement;
+        } catch (IndexOutOfBoundsException e){
+            throw e;
         }
-        T oldElement = log[index];
-        log[index] = element;
-        return oldElement;
     }
     
     // Inserts the specified element at the specified position in this list.
     public void add(int index, T element)
     {
         if(index < 0 || index > size){
-            throw new IndexOutOfBoundsException("Out of bounds!");
+            throw new IndexOutOfBoundsException("Out of bounds! add(index, element)");
         }
         if(isFull()){
             T[] newLog = (T[])new Object[log.length * 2];

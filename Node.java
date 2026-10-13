@@ -1,0 +1,25 @@
+public class Node<T> {
+    T data;
+    Node<T> next;
+
+    public Node(T data) {
+        this.data = data;
+        this.next = null;
+    }
+    
+    public T getData(){
+        return data;
+    }
+
+    public Node<T> getNext(){
+        return next;
+    }
+
+    public void setLink(Node<T> other){
+        next = other;
+    }
+
+    public String toString(){
+        return "" + data;
+    }
+}
