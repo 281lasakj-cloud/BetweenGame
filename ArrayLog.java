@@ -121,7 +121,11 @@ public class ArrayLog<T> implements EnhancedLogInterface<T>
     // Inserts the specified element at the specified position in this list.
     public void add(int index, T element)
     {
-            if(isFull()){
+        if (index >= 0 || index > size) {
+            throw new IndexOutOfBoundsException();
+        }    
+
+        if(isFull()){
                 T[] newLog = (T[])new Object[log.length * 2];
                 for(int i = 0; i < size; i++){
                     newLog[i] = log[i];
@@ -131,6 +135,7 @@ public class ArrayLog<T> implements EnhancedLogInterface<T>
             for(int i = size; i > index; i--){
                 log[i] = log[i - 1];
             }
+            log[index] = element;
             size++;
      
     }
