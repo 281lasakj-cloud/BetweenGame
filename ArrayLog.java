@@ -106,22 +106,22 @@ public class ArrayLog<T> implements EnhancedLogInterface<T>
     // with the specified element.  Returns what was at that location
     public T set(int index, T element)
     {
-        try{
+        
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }        
             if(index < 0 || index >= size){
                 System.out.println("Throw");
             }
             T oldElement = log[index];
             log[index] = element;
             return oldElement;
-        } catch (IndexOutOfBoundsException e){
-            throw e;
-        }
     }
     
     // Inserts the specified element at the specified position in this list.
     public void add(int index, T element)
     {
-        if (index >= 0 || index > size) {
+        if (index < 0 || index > size) {
             throw new IndexOutOfBoundsException();
         }    
 
