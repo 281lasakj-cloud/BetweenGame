@@ -3,72 +3,49 @@ import java.util.Random;
 public class Deck
 {
     private ArrayLog<Card> cards;
-    private Random random;
+    private int next;
 
-    public Deck()
-    {
-        cards = new ArrayLog<Card>("Deck");
-        random = new Random();
-
-        createDeck();
+    public Deck(){
         shuffle();
-    }
-
-    private void createDeck()
-    {
-        cards.clear();
-
-        String[] suits = {
-            "Hearts", "Diamonds", "Clubs", "Spades"
-        };
-
-        String[] ranks = {
-            "2", "3", "4", "5", "6", "7",
-            "8", "9", "10", "Jack", "Queen",
-            "King", "Ace"
-        };
-
-        for (String suit : suits)
-        {
-            for (int i = 0; i < ranks.length; i++)
-            {
-                cards.add(new Card(suit, ranks[i], i + 2));
-            }
-        }
     }
 
     public void shuffle()
     {
+        cards = new ArrayLog<Card>("Deck");
+        String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
+
+        
+        for (String suit : suits)
+        {
+            for (int value = 1; value <= 13; value++)
+            {
+                cards.add(new Card(suit, value));
+            }
+        }
+
+        Random rand = new Random();
+
         for (int i = cards.size() - 1; i > 0; i--)
         {
-            int j = random.nextInt(i + 1);
+            int j = rand.nextInt(i + 1);
 
             Card temp = cards.get(i);
             cards.set(i, cards.get(j));
             cards.set(j, temp);
         }
+
+        next = 0;
     }
 
     public Card drawCard()
     {
-        if (cards.isEmpty())
+        if (next >= cards.size())
         {
-            createDeck();
+            System.out.println("The deck is empty. Reshuffling.");
+
             shuffle();
         }
 
-        Card drawn = cards.remove(cards.size() - 1);
-
-        if (cards.size() < 10 && !cards.isEmpty())
-        {
-            shuffle();
-        }
-
-        return drawn;
-    }
-
-    public int cardsRemaining()
-    {
-        return cards.size();
+        return cards.get(next++);
     }
 }

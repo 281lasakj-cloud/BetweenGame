@@ -55,7 +55,10 @@ public class Between
 
             int firstValue = first.getValue();
             int secondValue = second.getValue();
-            int difference = Math.abs(firstValue - secondValue);
+
+            int low = Math.min(firstValue, secondValue);
+            int high = Math.max(firstValue, secondValue);
+            int difference = high-low;
 
             if (difference == 0)
             {
@@ -69,6 +72,26 @@ public class Between
             }
             else
             {
+                int finBet = bet;
+                System.out.println("Do you want to double your bet? (Y/N)");
+
+                String doubleChoice = input.nextLine().trim();
+
+                if (doubleChoice.equalsIgnoreCase("Y") || doubleChoice.equalsIgnoreCase("YES"))
+                {
+                    if (bet <= money - bet)
+                    {
+                        finBet = bet * 2;
+                        System.out.println(
+                            "Your bet is $" + finBet + "."
+                        );
+                    }
+                    else
+                    {
+                        System.out.println("You don't have enough money to double your bet." + bet + ".");
+                    }
+                }
+
                 String guess;
 
                 while (true)
@@ -80,14 +103,12 @@ public class Between
 
                     guess = input.nextLine().trim();
 
-                    if (guess.equalsIgnoreCase("I")
-                            || guess.equalsIgnoreCase("INSIDE"))
+                    if (guess.equalsIgnoreCase("I") || guess.equalsIgnoreCase("INSIDE"))
                     {
                         guess = "I";
                         break;
                     }
-                    else if (guess.equalsIgnoreCase("O")
-                            || guess.equalsIgnoreCase("OUTSIDE"))
+                    else if (guess.equalsIgnoreCase("O") || guess.equalsIgnoreCase("OUTSIDE"))
                     {
                         guess = "O";
                         break;
@@ -103,29 +124,23 @@ public class Between
                 Card third = deck.drawCard();
                 System.out.println("Third card: " + third);
 
-                int low = Math.min(firstValue, secondValue);
-                int high = Math.max(firstValue, secondValue);
                 int thirdValue = third.getValue();
 
-                boolean inside =
-                    thirdValue > low && thirdValue < high;
+                boolean inside = thirdValue > low && thirdValue < high;
 
-                boolean outside =
-                    thirdValue < low || thirdValue > high;
+                boolean outside = thirdValue < low || thirdValue > high;
 
-                boolean won =
-                    (guess.equals("I") && inside)
-                    || (guess.equals("O") && outside);
+                boolean won = (guess.equals("I") && inside) || (guess.equals("O") && outside);
 
                 if (won)
                 {
                     System.out.println("Correct guess, you win $" + bet + "!");
-                    money += bet;
+                    money += finBet;
                 }
                 else
                 {
                     System.out.println("Wrong guess, you lose $" + bet + ".");
-                    money -= bet;
+                    money -= finBet;
                 }
             }
 

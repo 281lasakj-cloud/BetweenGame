@@ -4,21 +4,15 @@ public class Card
     private String rank;
     private int value;
 
-    public Card(String suit, String rank, int value)
+    public Card(String suit, int value)
     {
         this.suit = suit;
-        this.rank = rank;
         this.value = value;
     }
 
     public String getSuit()
     {
         return suit;
-    }
-
-    public String getRank()
-    {
-        return rank;
     }
 
     public int getValue()
@@ -28,6 +22,6 @@ public class Card
 
     public String toString()
     {
-        return rank + " of " + suit;
+        return value + " of " + suit;
     }
 }
